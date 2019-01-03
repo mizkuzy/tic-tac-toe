@@ -32,6 +32,9 @@ ol, ul {
   width: 34px;
 }
 
+.last-move{
+  font-weight: bold;
+}
 .square:focus {
   outline: none;
 }

@@ -6,7 +6,7 @@ const X = "x";
 const O = "o";
 const ROWS_NUMBER = 3;
 const CELLS_NUMBER = 3;
-const EMPTY_BOARD = Array(ROWS_NUMBER).fill(null).map(x => Array(CELLS_NUMBER).fill(null));
+const EMPTY_BOARD = Array(ROWS_NUMBER).fill(null).map(() => Array(CELLS_NUMBER).fill(null));
 
 const Square = ({value, onClick}) => (
   <button className="square" onClick={onClick}>
@@ -30,7 +30,7 @@ class Board extends React.Component {
     const rows = [];
 
     for (let i = 0; i < ROWS_NUMBER; i++) {
-      const row = []
+      const row = [];
       for (let j = 0; j < CELLS_NUMBER; j++) {
         row.push(this.renderSquare(i, j))
       }
@@ -62,7 +62,7 @@ const calculateWinner = rows => {
   }
 
   return null;
-}
+};
 
 class Game extends React.Component {
   constructor(props) {
@@ -111,16 +111,18 @@ class Game extends React.Component {
 
   render() {
     const history = this.state.history;
-    const current = history[this.state.stepNumber];
+    const stepNumber = this.state.stepNumber;
+    const current = history[stepNumber];
     const winner = calculateWinner(current.squares);
 
     const moves = history.map((step, move) => {
       const desc = move ?
         `Go to move # ${move}: (${step.lastClickedX},${step.lastClickedY})` :
         'Go to game start';
+
       return (
         <li key={move}>
-          <button onClick={() => this.jumpTo(move)}>{desc}</button>
+          <button className={move === stepNumber ? "last-move" : ""} onClick={() => this.jumpTo(move)}>{desc}</button>
         </li>
       );
     });
